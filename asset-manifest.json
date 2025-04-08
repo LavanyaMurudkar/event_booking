@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/LavanyaMurudkar/event_booking/static/css/main.19460962.css",
+    "main.js": "/LavanyaMurudkar/event_booking/static/js/main.f6dfb284.js",
+    "static/media/reactconf.jpg": "/LavanyaMurudkar/event_booking/static/media/reactconf.2a5c1f3bf07771aa7777.jpg",
+    "static/media/techsummit.jpg": "/LavanyaMurudkar/event_booking/static/media/techsummit.af6c0bc5f2a4994e4db9.jpg",
+    "static/media/foodfest.jpg": "/LavanyaMurudkar/event_booking/static/media/foodfest.c1b2c06bac034563f9ee.jpg",
+    "static/media/musicfest.jpg": "/LavanyaMurudkar/event_booking/static/media/musicfest.369b1df1ef2dd75543a5.jpg",
+    "static/media/yoga.jpg": "/LavanyaMurudkar/event_booking/static/media/yoga.4eef68a1cbac7e95b5f5.jpg",
+    "index.html": "/LavanyaMurudkar/event_booking/index.html",
+    "main.19460962.css.map": "/LavanyaMurudkar/event_booking/static/css/main.19460962.css.map",
+    "main.f6dfb284.js.map": "/LavanyaMurudkar/event_booking/static/js/main.f6dfb284.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.19460962.css",
+    "static/js/main.f6dfb284.js"
+  ]
+}
