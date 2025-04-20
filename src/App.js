@@ -8,7 +8,7 @@ import BookingConfirmed from "./pages/BookingConfirmed";
 
 export default function App() {
   return (
-    <Router basename="/LavanyaMurudkar/event_booking">
+    <Router>
       <div className="app-container">
         <Navbar />
         <main className="main-content">
