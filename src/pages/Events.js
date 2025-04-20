@@ -83,8 +83,11 @@ export default function Events() {
   const [search, setSearch] = useState("");
 
   const filteredEvents = events.filter((event) =>
-    event.location.toLowerCase().includes(search.toLowerCase())
+    event.title.toLowerCase().includes(search.toLowerCase()) ||
+    event.location.toLowerCase().includes(search.toLowerCase()) ||
+    event.type.toLowerCase().includes(search.toLowerCase())
   );
+  
 
   return (
     <>

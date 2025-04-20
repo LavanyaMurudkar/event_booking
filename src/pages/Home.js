@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import musicFestImg from "../assets/images/musicfest.jpg";
 import techSummitImg from "../assets/images/techsummit.jpg";
 import foodFestImg from "../assets/images/foodfest.jpg";
 import artImg from "../assets/images/art.jpg";
-import { useNavigate } from "react-router-dom";
 
+// Sample event list
 const events = [
   {
     id: 1,
@@ -45,26 +46,77 @@ const events = [
 ];
 
 export default function Home() {
-  const [selectedEvent, setSelectedEvent] = useState(null);
   const navigate = useNavigate();
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [userName, setUserName] = useState("");
+  const [wishlist, setWishlist] = useState([]);
+  const [ratings, setRatings] = useState({});
 
+  // Get data from localStorage on load
+  useEffect(() => {
+    const savedName = localStorage.getItem("userName");
+    if (savedName) setUserName(savedName);
+    else {
+      const name = prompt("Hi there! What's your name?");
+      if (name) {
+        localStorage.setItem("userName", name);
+        setUserName(name);
+      }
+    }
+
+    const savedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    setWishlist(savedWishlist);
+
+    const savedRatings = JSON.parse(localStorage.getItem("eventRatings")) || {};
+    setRatings(savedRatings);
+  }, []);
+
+  // Save wishlist to localStorage
+  const handleWishlist = (eventId) => {
+    let updatedWishlist;
+    if (wishlist.includes(eventId)) {
+      updatedWishlist = wishlist.filter((id) => id !== eventId);
+    } else {
+      updatedWishlist = [...wishlist, eventId];
+    }
+    setWishlist(updatedWishlist);
+    localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+  };
+
+  // Calculate average rating
+  const getAverageRating = (eventId) => {
+    const eventReviews = ratings[eventId] || [];
+    if (eventReviews.length === 0) return "No Ratings";
+    const avg = eventReviews.reduce((acc, val) => acc + val, 0) / eventReviews.length;
+    return `★ ${avg.toFixed(1)}`;
+  };
+
+  const isTrending = (eventId) => {
+    // simple logic: trending = saved more than once
+    return wishlist.filter((id) => id === eventId).length >= 1;
+  };
 
   return (
     <>
       <div className="home-container">
         <h1>Welcome to EventBooking</h1>
+        {userName && <p>Hi {userName} 👋</p>}
         <p>Explore and book events happening around you! 🎉</p>
 
         <div className="event-list">
           {events.map((event) => (
-            <div
-              key={event.id}
-              className="event-card"
-              onClick={() => setSelectedEvent(event)}
-            >
-              <img src={event.image} alt={event.title} />
+            <div key={event.id} className="event-card">
+              <img src={event.image} alt={event.title} onClick={() => setSelectedEvent(event)} />
               <h3>{event.title}</h3>
               <p>{event.location} • {event.date}</p>
+              <p>{getAverageRating(event.id)}</p>
+              {isTrending(event.id) && <span className="trending-tag">🔥 Trending</span>}
+              <button
+                className={`save-btn ${wishlist.includes(event.id) ? "saved" : ""}`}
+                onClick={() => handleWishlist(event.id)}
+              >
+                {wishlist.includes(event.id) ? "❤️ Saved" : "♡ Save for later"}
+              </button>
             </div>
           ))}
         </div>
@@ -79,11 +131,13 @@ export default function Home() {
             <p>{selectedEvent.description}</p>
 
             <button
-  className="book-button"
-  onClick={() => navigate("/booking-confirmed", { state: { event: selectedEvent } })}
->
-  Book Now
-</button>
+              className="book-button"
+              onClick={() =>
+                navigate("/booking-confirmed", { state: { event: selectedEvent } })
+              }
+            >
+              Book Now
+            </button>
           </div>
         )}
       </div>
@@ -91,7 +145,6 @@ export default function Home() {
       <style>{`
         .home-container {
           text-align: center;
-          margin-top: 2rem;
           padding: 1rem;
         }
         .event-list {
@@ -107,10 +160,7 @@ export default function Home() {
           border-radius: 8px;
           padding: 1rem;
           cursor: pointer;
-          transition: box-shadow 0.3s ease;
-        }
-        .event-card:hover {
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          position: relative;
         }
         .event-card img {
           width: 100%;
@@ -118,20 +168,24 @@ export default function Home() {
           object-fit: cover;
           border-radius: 4px;
         }
+        .event-card .trending-tag {
+          background: orange;
+          color: white;
+          padding: 0.3rem 0.6rem;
+          border-radius: 5px;
+          font-size: 0.8rem;
+          position: absolute;
+          top: 10px;
+          right: 10px;
+        }
         .event-details {
           margin-top: 3rem;
           padding: 2rem;
           border-top: 1px solid #ccc;
-          text-align: left;
           max-width: 600px;
           margin-left: auto;
           margin-right: auto;
-        }
-        .event-details img {
-          width: 100%;
-          height: auto;
-          border-radius: 4px;
-          margin-bottom: 1rem;
+          text-align: left;
         }
         .book-button {
           background-color: #007bff;
@@ -145,6 +199,17 @@ export default function Home() {
         }
         .book-button:hover {
           background-color: #0056b3;
+        }
+        .save-btn {
+          background: none;
+          border: none;
+          font-size: 1rem;
+          cursor: pointer;
+          margin-top: 0.5rem;
+          color: #ff3b3b;
+        }
+        .save-btn.saved {
+          font-weight: bold;
         }
       `}</style>
     </>

@@ -13,6 +13,7 @@ export const events = [
       date: "2025-06-10",
       type: "Tech",
       image: "reactConfImg",
+      timestamp: 1682102400000
     },
     {
       id: 2,
@@ -21,6 +22,7 @@ export const events = [
       date: "2025-07-15",
       type: "Music",
       image: "musicFestImg",
+      timestamp: 1682102400000
     },
     {
       id: 3,
@@ -29,6 +31,7 @@ export const events = [
       date: "2025-08-20",
       type: "Business",
       image: "startupImg",
+      timestamp: 1682102400000
     },
     {
       id: 4,
@@ -37,6 +40,7 @@ export const events = [
       date: "2025-09-20",
       type: "Art",
       image: null,
+      timestamp: 1682102400000
     },
     {
       id: 5,
@@ -45,6 +49,7 @@ export const events = [
       date: "2025-10-12",
       type: "Food",
       image: null,
+      timestamp: 1682102400000
     },
     {
       id: 6,
@@ -53,6 +58,7 @@ export const events = [
       date: "2025-11-25",
       type: "Tech",
       image: null,
+      timestamp: 1682102400000
     },
     {
       id: 7,
@@ -61,6 +67,7 @@ export const events = [
       date: "2025-12-01",
       type: "Workshop",
       image: null,
+      timestamp: 1682102400000
     },
     {
       id: 8,
@@ -69,6 +76,7 @@ export const events = [
       date: "2025-12-15",
       type: "Health",
       image: null,
+      timestamp: 1682102400000
     }
   ];
   

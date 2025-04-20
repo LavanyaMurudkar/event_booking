@@ -1,21 +1,23 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import Events from "./pages/Events";
 import NotFound from "./pages/NotFound";
 import BookingConfirmed from "./pages/BookingConfirmed";
 
 export default function App() {
   return (
-    <Router>
+    <Router basename="/LavanyaMurudkar/event_booking">
       <div className="app-container">
         <Navbar />
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/events" element={<Events />} />
-            <Route path="*" element={<NotFound />} />
             <Route path="/booking-confirmed" element={<BookingConfirmed />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
         <footer className="footer">
@@ -49,4 +51,3 @@ export default function App() {
     </Router>
   );
 }
-
